@@ -16,21 +16,16 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
     if (action == GLFW_PRESS) {
         GLContext* context = static_cast<GLContext*>(glfwGetWindowUserPointer(window));
-        ((void(*)(int))context->onInput)(key);
+        ((void(*)(GLContext, int))context->onInput)(*context, key);
     }
 }
 
 
-int GLContext::init(const char* windowName,int width , int height, void(*onDraw)(), void(*onInput)(int)) {
-
-    window_name = windowName;
+int GLContext::init(int width , int height) {
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
-    this->onDraw = onDraw;
-    this->onInput = onInput;
     glfwInit();
-    if (fullscreen) {window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, window_name, glfwGetPrimaryMonitor(), NULL);}
-    else {window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, window_name, NULL, NULL);}
+    window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, window_name, NULL, NULL);
     if (window == NULL)
     {
         glfwTerminate();
@@ -47,7 +42,8 @@ int GLContext::init(const char* windowName,int width , int height, void(*onDraw)
     glfwSetKeyCallback(window, key_callback);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    cout << "OpenGL version : " << glGetString(GL_VERSION) << endl;
+    //cout << "OpenGL version : " << glGetString(GL_VERSION) << endl;
+    renderLoop();
     return 0;
 }
 
@@ -82,11 +78,9 @@ void GLContext::renderLoop() {
     while (!glfwWindowShouldClose(window)){
         updateFullScreen();
         glfwSwapBuffers(window);
+        if (!alpha) { glClear(GL_COLOR_BUFFER_BIT); glClearColor(background.x, background.y, background.z, background.w);}
         glfwPollEvents();
-
-        if (!alpha) { glClear(GL_COLOR_BUFFER_BIT); }
-        onDraw();
-        
+        onDraw(*this);
     }
     glfwTerminate();
 }
