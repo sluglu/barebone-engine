@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(barebone-engine)
+project(glad)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 11)
@@ -8,24 +8,12 @@ set(CMAKE_CXX_STANDARD 11)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Add all header files in the include folder
-file(GLOB HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
+file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
 
 # Add all source files in the src folder
-file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
 
 # Add an executable target
 add_library(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
-
-add_subdirectory(glm)
-
-target_link_libraries(${PROJECT_NAME} glm)
-
-add_subdirectory(glfw)
-
-target_link_libraries(${PROJECT_NAME} glfw)
-
-add_subdirectory(glad)
-
-target_link_libraries(${PROJECT_NAME} glad)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
