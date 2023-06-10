@@ -94,3 +94,20 @@ void GLContext::TakeScreenshot(string filePath) {
     if (!error) { lodepng::save_file(PngBuffer, filePath); }
     if (error) std::cout << "encoder error " << error << ": " << lodepng_error_text(error) << std::endl;
 }
+
+void GLContext::drawPoint(vec2 position, float size, vec4 color) {
+    glColor4f(color.x, color.y, color.z, color.w);
+    glPointSize(size);
+    glBegin(GL_POINTS);
+    glVertex2f(position.x, position.y);
+    glEnd();
+}
+
+void GLContext::drawLine(vec2 position1, vec2 position2, float width, vec4 color) {
+    glColor4f(color.x, color.y, color.z, color.w);
+    glLineWidth(width);
+    glBegin(GL_LINES);
+    glVertex2f(position1.x, position1.y);
+    glVertex2f(position2.x, position2.y);
+    glEnd();
+}
