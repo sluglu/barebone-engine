@@ -16,7 +16,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
     if (action == GLFW_PRESS) {
         GLContext* context = static_cast<GLContext*>(glfwGetWindowUserPointer(window));
-        ((void(*)(GLContext, int))context->onInput)(*context, key);
+        context->onInput(*context, key);
     }
 }
 
@@ -48,7 +48,6 @@ int GLContext::init(int width , int height) {
 }
 
 void GLContext::updateFullScreen() {
-
     if (fullScreenUpdate == fullscreen) {
         return;
     }
@@ -78,8 +77,8 @@ void GLContext::renderLoop() {
     while (!glfwWindowShouldClose(window)){
         updateFullScreen();
         glfwSwapBuffers(window);
-        if (!alpha) { glClear(GL_COLOR_BUFFER_BIT); glClearColor(background.x, background.y, background.z, background.w);}
         glfwPollEvents();
+        if (!alpha) { glClear(GL_COLOR_BUFFER_BIT); glClearColor(background.x, background.y, background.z, background.w);}
         onDraw(*this);
     }
     glfwTerminate();
