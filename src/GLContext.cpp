@@ -25,24 +25,26 @@ int GLContext::init(int width , int height) {
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
     glfwInit();
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);
     window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, window_name, NULL, NULL);
     if (window == NULL)
     {
         glfwTerminate();
         return -1;
     }
+    glfwSetWindowUserPointer(window, static_cast<void*>(this));
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetKeyCallback(window, key_callback);
     glfwMakeContextCurrent(window);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << endl;
         return -1;
     }
-    glfwSetWindowUserPointer(window, static_cast<void*>(this));
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetKeyCallback(window, key_callback);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //cout << "OpenGL version : " << glGetString(GL_VERSION) << endl;
+    initialize(*this);
     renderLoop();
     return 0;
 }
@@ -76,7 +78,7 @@ void GLContext::updateFullScreen() {
 void GLContext::renderLoop() {
     while (!glfwWindowShouldClose(window)){
         updateFullScreen();
-        glfwSwapBuffers(window);
+        glFlush();
         glfwPollEvents();
         if (!alpha) { glClear(GL_COLOR_BUFFER_BIT); glClearColor(background.x, background.y, background.z, background.w);}
         onDraw(*this);
