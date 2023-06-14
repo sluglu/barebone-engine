@@ -16,7 +16,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
     if (action == GLFW_PRESS) {
         GLContext* context = static_cast<GLContext*>(glfwGetWindowUserPointer(window));
-        context->onInput(*context, key);
+        if (context->onInput) { context->onInput(*context, key); }
     }
 }
 
@@ -44,7 +44,7 @@ int GLContext::init(int width , int height) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //cout << "OpenGL version : " << glGetString(GL_VERSION) << endl;
-    initialize(*this);
+    if (initialize) { initialize(*this); }
     renderLoop();
     return 0;
 }
@@ -81,7 +81,7 @@ void GLContext::renderLoop() {
         glFlush();
         glfwPollEvents();
         if (!alpha) { glClear(GL_COLOR_BUFFER_BIT); glClearColor(background.x, background.y, background.z, background.w);}
-        onDraw(*this);
+        if (onDraw) { onDraw(*this); }
     }
     glfwTerminate();
 }
