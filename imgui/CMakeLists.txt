@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(barebone-engine)
+project(imgui)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 11)
@@ -16,15 +16,11 @@ add_library(${PROJECT_NAME} ${SOURCE_FILES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_subdirectory(imgui)
+add_subdirectory(glfw)
 
-target_link_libraries(${PROJECT_NAME} imgui)
+target_link_libraries(${PROJECT_NAME} glfw)
 
-add_subdirectory(glm)
+add_subdirectory(glad)
 
-target_link_libraries(${PROJECT_NAME} glm)
-
-add_subdirectory(lodepng)
-
-target_link_libraries(${PROJECT_NAME} lodepng)
+target_link_libraries(${PROJECT_NAME} glad)
 
