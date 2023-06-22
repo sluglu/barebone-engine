@@ -1,5 +1,6 @@
 #include "GLContext.h"
 
+
 namespace GLContext {
 
     int oldWidth = 1000;
@@ -216,19 +217,44 @@ namespace GLContext {
         return 0;
     }
 
+    bool ShowSaveFileDialog(char* filePath, const char* filter) {
+        HWND hwnd = glfwGetWin32Window(window);
+        OPENFILENAME ofn;
+        ZeroMemory(&ofn, sizeof(OPENFILENAME));
 
-    void GLContext::TakeScreenshot(string filePath) {
-        std::vector<unsigned char> image(viewportResW * viewportResH * 4);
-        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-        glReadPixels(0, 0, viewportResW, viewportResH, GL_RGBA, GL_UNSIGNED_BYTE, image.data());
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        std::vector<unsigned char> PngBuffer;
-        unsigned error = lodepng::encode(PngBuffer, image, viewportResW, viewportResH);
-        if (!error) { lodepng::save_file(PngBuffer, filePath); }
-        if (error) std::cout << "encoder error " << error << ": " << lodepng_error_text(error) << std::endl;
+        ofn.lStructSize = sizeof(OPENFILENAME);
+        ofn.hwndOwner = hwnd;
+        ofn.lpstrFilter = filter;
+        ofn.lpstrFile = filePath;
+        ofn.nMaxFile = MAX_PATH;
+        ofn.Flags = OFN_OVERWRITEPROMPT;
+
+        if (GetSaveFileNameA(&ofn))
+        {
+            return true;
+        }
+
+        return false;
     }
 
-    void GLContext::drawPoint(vec2 position, float size, vec4 color) {
+    const char* TakeScreenshot() {
+        char filePath[MAX_PATH] = " ";
+        if (ShowSaveFileDialog(filePath, ".png")) {
+            std::vector<unsigned char> image(viewportResW * viewportResH * 4);
+            glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+            glReadPixels(0, 0, viewportResW, viewportResH, GL_RGBA, GL_UNSIGNED_BYTE, image.data());
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            std::vector<unsigned char> PngBuffer;
+            unsigned error = lodepng::encode(PngBuffer, image, viewportResW, viewportResH);
+            if (!error) { lodepng::save_file(PngBuffer, filePath); return filePath; }
+            if (error) { return lodepng_error_text(error); }
+        }
+        else { return "Not saved"; }
+    }
+
+    
+
+    void drawPoint(vec2 position, float size, vec4 color) {
         glColor4f(color.x, color.y, color.z, color.w);
         glPointSize(size);
         glBegin(GL_POINTS);
@@ -236,7 +262,7 @@ namespace GLContext {
         glEnd();
     }
 
-    void GLContext::drawLine(vec2 position1, vec2 position2, float width, vec4 color) {
+    void drawLine(vec2 position1, vec2 position2, float width, vec4 color) {
         glColor4f(color.x, color.y, color.z, color.w);
         glLineWidth(width);
         glBegin(GL_LINES);

@@ -4,10 +4,16 @@
 #include <stdio.h>
 
 #include <glad/glad.h>
+#define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 #include "lodepng.h"
 #include <glm/glm.hpp>
+
+#include <Windows.h>
+#include <commdlg.h>
 #include <iostream>
+
 
 
 using namespace std;
@@ -32,7 +38,7 @@ namespace GLContext {
 
 	int init(int width, int height);
 	
-	void TakeScreenshot(string filepath);
+	const char* TakeScreenshot();
 	
 	void drawPoint(vec2 position, float size = 5, vec4 color = vec4(1, 1, 1, 1));
 	void drawLine(vec2 position1, vec2 position2, float width = 1, vec4 color = vec4(1, 1, 1, 1));
