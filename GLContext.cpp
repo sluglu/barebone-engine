@@ -237,7 +237,9 @@ namespace GLContext {
         return false;
     }
 
-    const char* TakeScreenshot() {
+    string TakeScreenshot() {
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        io.IniFilename = NULL;
         char filePath[MAX_PATH] = " ";
         if (ShowSaveFileDialog(filePath, ".png")) {
             std::vector<unsigned char> image(viewportResW * viewportResH * 4);

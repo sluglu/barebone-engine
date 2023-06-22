@@ -38,7 +38,7 @@ namespace GLContext {
 
 	int init(int width, int height);
 	
-	const char* TakeScreenshot();
+	string TakeScreenshot();
 	
 	void drawPoint(vec2 position, float size = 5, vec4 color = vec4(1, 1, 1, 1));
 	void drawLine(vec2 position1, vec2 position2, float width = 1, vec4 color = vec4(1, 1, 1, 1));
