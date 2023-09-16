@@ -21,7 +21,7 @@ namespace GLContext {
     int SCR_HEIGHT = 1080;
     int viewportResW = 1000;
     int viewportResH = 1000;
-    vec4 background = vec4(0, 0, 0, 0);
+    vec4 background = vec4(0.1f, 0.1f, 0.1f, 1.0f);
     void (*onInput)(int key) {};
     void (*onDraw)() {};
     void (*initialize)() {};
@@ -273,4 +273,20 @@ namespace GLContext {
         glEnd();
     }
 
+    void drawSquare(vec2 pos, float squareSize, float squareThickness, vec4 squareColor) {
+        float x = pos.x;
+        float y = pos.y;
+        vec2 a = vec2(x - squareSize / 2.0f, y + squareSize / 2.0f);
+        vec2 b = vec2(x + squareSize / 2.0f, y + squareSize / 2.0f);
+        vec2 c = vec2(x + squareSize / 2.0f, y - squareSize / 2.0f);
+        vec2 d = vec2(x - squareSize / 2.0f, y - squareSize / 2.0f);
+        drawPoint(a, squareThickness, squareColor);
+        drawLine(a, b, squareThickness, squareColor);
+        drawPoint(b, squareThickness, squareColor);
+        drawLine(b, c, squareThickness, squareColor);
+        drawPoint(c, squareThickness, squareColor);
+        drawLine(c, d, squareThickness, squareColor);
+        drawPoint(d, squareThickness, squareColor);
+        drawLine(d, a, squareThickness, squareColor);
+    }
 }
