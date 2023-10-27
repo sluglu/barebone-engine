@@ -289,4 +289,11 @@ namespace GLContext {
         drawPoint(d, squareThickness, squareColor);
         drawLine(d, a, squareThickness, squareColor);
     }
+
+    void alphaClear() {
+        glBindFramebuffer(GL_FRAMEBUFFER, GLContext::fbo);
+        glClear(GL_COLOR_BUFFER_BIT); 
+        glClearColor(background.x, background.y, background.z, background.w);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
 }

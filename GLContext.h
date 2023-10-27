@@ -36,13 +36,14 @@ namespace GLContext {
 	extern void (*onDrawUI)();
 	
 
-	int init(int width, int height);
+	int init(int width = 500, int height = 500);
 	
 	string TakeScreenshot();
 	
 	void drawPoint(vec2 position, float size = 5, vec4 color = vec4(1, 1, 1, 1));
 	void drawLine(vec2 position1, vec2 position2, float width = 1, vec4 color = vec4(1, 1, 1, 1));
 	void drawSquare(vec2 pos, float squareSize = 1.0f, float squareThickness = 2.0f, vec4 squareColor = vec4(1, 1, 1, 1));
+	void alphaClear();
 	
 }
 
