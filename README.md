@@ -4,3 +4,5 @@ TODO:
   -  noise
   -  quad three
   -  n-body simulation
+  -  (huegen)
+  -  (snowflakes-generator)
