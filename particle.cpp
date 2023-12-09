@@ -14,16 +14,6 @@ particle::particle(bool l, float m, float s, vec4 c, vec2 p, vec2 sp) {
 }
 
 particle::particle() {
-    locked = false;
-    edgesReset = false;
-    maxSpeed = 0.05f;
-    mass = 1000;
-    size = 1;
-    color = vec4(255, 255, 255, 255);
-    position = vec2(0,0);
-    oldPosi = position;
-    speed = vec2(0,0);
-    acceleration = vec2(0,0);
 }
 
 void particle::update(){
