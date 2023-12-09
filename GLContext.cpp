@@ -256,38 +256,51 @@ namespace GLContext {
 
     
 
-    void drawPoint(vec2 position, float size, vec4 color) {
-        glColor4f(color.x, color.y, color.z, color.w);
-        glPointSize(size);
+    void drawPoint(vec2 position, float Thickness, vec4 Color) {
+        glColor4f(Color.x, Color.y, Color.z, Color.w);
+        glLineWidth(Thickness);
         glBegin(GL_POINTS);
         glVertex2f(position.x, position.y);
         glEnd();
     }
 
-    void drawLine(vec2 position1, vec2 position2, float width, vec4 color) {
-        glColor4f(color.x, color.y, color.z, color.w);
-        glLineWidth(width);
+    void drawLine(vec2 position1, vec2 position2, float Thickness, vec4 Color) {
+        glColor4f(Color.x, Color.y, Color.z, Color.w);
+        glLineWidth(Thickness);
         glBegin(GL_LINES);
         glVertex2f(position1.x, position1.y);
         glVertex2f(position2.x, position2.y);
         glEnd();
     }
 
-    void drawSquare(vec2 pos, float squareSize, float squareThickness, vec4 squareColor) {
+    void drawSquare(vec2 pos, float Size, float Thickness, vec4 Color) {
         float x = pos.x;
         float y = pos.y;
-        vec2 a = vec2(x - squareSize / 2.0f, y + squareSize / 2.0f);
-        vec2 b = vec2(x + squareSize / 2.0f, y + squareSize / 2.0f);
-        vec2 c = vec2(x + squareSize / 2.0f, y - squareSize / 2.0f);
-        vec2 d = vec2(x - squareSize / 2.0f, y - squareSize / 2.0f);
-        drawPoint(a, squareThickness, squareColor);
-        drawLine(a, b, squareThickness, squareColor);
-        drawPoint(b, squareThickness, squareColor);
-        drawLine(b, c, squareThickness, squareColor);
-        drawPoint(c, squareThickness, squareColor);
-        drawLine(c, d, squareThickness, squareColor);
-        drawPoint(d, squareThickness, squareColor);
-        drawLine(d, a, squareThickness, squareColor);
+        vec2 a = vec2(x - Size / 2.0f, y + Size / 2.0f);
+        vec2 b = vec2(x + Size / 2.0f, y + Size / 2.0f);
+        vec2 c = vec2(x + Size / 2.0f, y - Size / 2.0f);
+        vec2 d = vec2(x - Size / 2.0f, y - Size / 2.0f);
+        drawPoint(a, Thickness, Color);
+        drawLine(a, b, Thickness, Color);
+        drawPoint(b, Thickness, Color);
+        drawLine(b, c, Thickness, Color);
+        drawPoint(c, Thickness, Color);
+        drawLine(c, d, Thickness, Color);
+        drawPoint(d, Thickness, Color);
+        drawLine(d, a, Thickness, Color);
+    }
+
+    void drawCircle(vec2 pos, float radius, int numSegments, float Thickness, vec4 Color) {
+        glColor4f(Color.x, Color.y, Color.z, Color.w);
+        glLineWidth(Thickness);
+        glBegin(GL_LINE_LOOP);
+        for (int i = 0; i < numSegments; i++) {
+            float theta = 2.0f * 3.14159265358979323846264338327950f * static_cast<float>(i) / static_cast<float>(numSegments);
+            float x = radius * cosf(theta);
+            float y = radius * sinf(theta);
+            glVertex2f(pos.x + x, pos.y + y);
+        }
+        glEnd();
     }
 
     void alphaClear() {
