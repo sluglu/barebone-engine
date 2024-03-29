@@ -1,11 +1,4 @@
 TODO:
-- to integrate as example:
-  -  field
-  -  noise
-  -  quad three
-  -  n-body simulation
-  -  (huegen)
-  -  (snowflakes-generator)
 - readme :
   - general description
   - build instruction
