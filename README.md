@@ -1,5 +1,4 @@
 TODO:
-- properly link GLFW, ImGui, Lodepng and glm
 - refactor examples
 - cross-platform + cleanup
 - readme :
