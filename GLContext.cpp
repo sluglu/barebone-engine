@@ -258,7 +258,7 @@ namespace GLContext {
 
     void drawPoint(vec2 position, float Thickness, vec4 Color) {
         glColor4f(Color.x, Color.y, Color.z, Color.w);
-        glLineWidth(Thickness);
+        glPointSize(Thickness);
         glBegin(GL_POINTS);
         glVertex2f(position.x, position.y);
         glEnd();

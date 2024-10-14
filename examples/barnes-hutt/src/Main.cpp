@@ -174,13 +174,13 @@ void Ui() {
 
     ImGui::InputInt("Particles number", &simu.particleN);
 
-    ImGui::InputFloat("Constant G", &simu.G, 0.0f, 1.0f, "%.20f");
+    ImGui::InputDouble("Constant G", &simu.G, 0.0f, 1.0f, "%.20f");
     if (ImGui::Button("Reset G")) simu.G = 0.00000000006743f;
 
-    ImGui::InputFloat("Simulation precision", &simu.theta);
+    ImGui::InputDouble("Simulation precision", &simu.theta);
     if (ImGui::Button("Reset precision")) simu.theta = 0.5f;
 
-    ImGui::InputFloat("Quad minimum size", &simu.minQuad);
+    ImGui::InputDouble("Quad minimum size", &simu.minQuad);
     if (ImGui::Button("Reset minimum size")) simu.minQuad = 0.02f;
 
     ImGui::Spacing();

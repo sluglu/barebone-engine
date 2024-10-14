@@ -10,7 +10,6 @@ bool negativeMut = true;
 bool randomizeColor = true;
 bool randomizePosition = true;
 
-int newGridSize = gridSize;
 string message = " ";
 float pointSize = 3.5f;
 
@@ -160,7 +159,6 @@ void populateNeighbors(Cell& cell) {
 void populateGrid() {
     livingCell = vector<uvec2>();
     grid = vector<vector<Cell>>(gridSize, vector<Cell>(gridSize));
-    pointSize = ceil((float)GLContext::SCR_WIDTH / (float)gridSize);
     for (int i = 0; i < gridSize; i++) {
         for (int u = 0; u < gridSize; u++) {
             grid[i][u].pos = uvec2(i, u);
@@ -190,8 +188,8 @@ vector<uvec2> getEmptyNeighbors(const Cell& cell) {
 }
 
 void drawCell(const Cell& cell) {
-    float x = ((float)cell.pos.x / gridSize) * 2.0f - 1.0f + (1.0f / (float)gridSize);
-    float y = ((float)cell.pos.y / gridSize) * 2.0f - 1.0f + (1.0f / (float)gridSize);
+    double x = ((double)cell.pos.x / (double)gridSize) * 2.0f - 1.0f;
+    double y = ((double)cell.pos.y / (double)gridSize) * -2.0f + 1.0f;
     drawPoint(vec2(x, y), pointSize, cell.color);
 }
 
@@ -228,6 +226,7 @@ void randomize() {
 }
 
 void drawGrid() {
+    pointSize = ceil(std::max(GLContext::viewportResW, GLContext::viewportResH)/ (float)gridSize);
     for (int i = 0; i < gridSize; i++) {
         for (int u = 0; u < gridSize; u++) {
             drawCell(grid[i][u]);
@@ -279,6 +278,7 @@ void ui() {
     ImGui::Spacing();
 
     ImGui::SeparatorText("General");
+    int newGridSize = gridSize;
     ImGui::InputInt("grid size", &newGridSize);
     if (ImGui::IsItemDeactivatedAfterEdit()) {
         if (newGridSize < 1) { newGridSize = 1; }
