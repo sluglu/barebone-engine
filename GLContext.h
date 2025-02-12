@@ -23,6 +23,7 @@ namespace GLContext {
 	extern const char* window_name;
 	extern bool alpha;  
 	extern bool fullscreen;
+	extern bool fpsCounter;
 	extern int SCR_WIDTH;
 	extern int SCR_HEIGHT;
 
@@ -39,6 +40,8 @@ namespace GLContext {
 	int init(int width = 500, int height = 500);
 	
 	string TakeScreenshot();
+
+	void setWindowName(const char* name);
 	
 	void drawPoint(vec2 position, float size = 5, vec4 color = vec4(1, 1, 1, 1));
 	void drawLine(vec2 position1, vec2 position2, float width = 1, vec4 color = vec4(1, 1, 1, 1));

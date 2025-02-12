@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Users\eliot\Documents\projet_perso\programme\barebone-engine\barebone-engine\new-Barnes-hutt\main.cpp(5,6): warning C4326: le type de retour de 'main' doit être 'int' au lieu de 'void'
+  new-Barnes-hutt.vcxproj -> C:\Users\eliot\Documents\projet_perso\programme\barebone-engine\barebone-engine\build\x64\Debug\new-Barnes-hutt.exe
+  'pwsh.exe' n'est pas reconnu en tant que commande interne
+  ou externe, un programme exécutable ou un fichier de commandes.
