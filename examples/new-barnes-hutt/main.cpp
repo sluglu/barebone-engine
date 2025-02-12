@@ -16,7 +16,7 @@ void frame() {
 	n = (sin(getElapsedTime()) + 1)*10;
 	Color = vec4(cos(getElapsedTime()), sin(getElapsedTime()), tan(getElapsedTime()), 1);
 	GLContext::drawCircle(pos,i,n,Thickness,Color);
-
+	cout << getAbsoluteTime().seconds << endl;
 }
 
 void ui() {

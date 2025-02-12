@@ -38,16 +38,18 @@ namespace GLContext {
 	extern void (*onDrawUI)();
 
 	struct Time {
-		float seconds;
-		float minutes;
-		float hours;
-		float days;
-		float months;
-		float years;
+		int seconds;
+		int minutes;
+		int hours;
+		int days;
+		int months;
+		int years;
 
 		Time() {
 			auto now = std::chrono::system_clock::now();
 			std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+			struct tm time_info;
+			localtime_s(&time_info, &now_time);
 			seconds = localtime(&now_time)->tm_sec;
 			minutes = localtime(&now_time)->tm_min;
 			hours = localtime(&now_time)->tm_hour;
