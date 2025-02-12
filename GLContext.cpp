@@ -32,6 +32,16 @@ namespace GLContext {
 		window_name = name;
         glfwSetWindowTitle(window, name);
 	}
+
+	double getElapsedTime() {
+		return glfwGetTime();
+	}
+
+
+     Time getAbsoluteTime() {
+		 return Time();
+     }
+
     
     void updateFPS() {
         if (GLContext::fpsCounter) {

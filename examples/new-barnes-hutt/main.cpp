@@ -1,15 +1,22 @@
 #include <GLContext.h>
 
-//using namespace GLContext;
+using namespace GLContext;
 
 vec2 pos = vec2 (0,0);
 float radius = 1.0f;
 int numSegments = 5;
-float Thickness = 2.0f;
+float Thickness = 5.0f;
 vec4 Color = vec4(1, 1, 1, 1);
+float i = 0.0f;
+float n = 0.0f;
+
 
 void frame() {
-	GLContext::drawCircle(pos,radius,numSegments,Thickness,Color);
+	i = cos(getElapsedTime());
+	n = (sin(getElapsedTime()) + 1)*10;
+	Color = vec4(cos(getElapsedTime()), sin(getElapsedTime()), tan(getElapsedTime()), 1);
+	GLContext::drawCircle(pos,i,n,Thickness,Color);
+
 }
 
 void ui() {
@@ -26,5 +33,5 @@ void main() {
 	GLContext::onDrawUI = ui;
 	GLContext::onDraw = frame;
 	GLContext::fpsCounter = true;
-	GLContext::init(500, 500);
+	GLContext::init(1000, 1000);
 }
