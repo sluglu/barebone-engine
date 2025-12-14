@@ -17,6 +17,7 @@ namespace GLContext {
     bool alpha = false;
     bool GUI = true;
     bool fullscreen = false;
+	bool fpsCounter = false;
     int SCR_WIDTH = 1920;
     int SCR_HEIGHT = 1080;
     int viewportResW = 1000;
@@ -26,7 +27,28 @@ namespace GLContext {
     void (*onDraw)() {};
     void (*initialize)() {};
     void (*onDrawUI)() {};
+
+	void setWindowName(const char* name) {
+		window_name = name;
+        glfwSetWindowTitle(window, name);
+	}
+
+	double getElapsedTime() {
+		return glfwGetTime();
+	}
+
+
+     Time getAbsoluteTime() {
+		 return Time();
+     }
+
     
+    void updateFPS() {
+        if (GLContext::fpsCounter) {
+            string fpsLabel = "fps : " + to_string(ImGui::GetIO().Framerate);
+            setWindowName(fpsLabel.c_str());
+        }
+    }
 
     void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     {
@@ -70,6 +92,7 @@ namespace GLContext {
 
     void renderLoop() {
         while (!glfwWindowShouldClose(GLContext::window)) {
+			updateFPS();
             updateFullScreen();
             glFlush();
             glfwPollEvents();
