@@ -77,9 +77,9 @@ void drawQuad(const Quad& q) {
     vec2 topRight = vec2(q.botRight.x, q.topLeft.y);
     vec2 botLeft = vec2(q.topLeft.x, q.botRight.y);
 
-    drawLine(q.topLeft, topRight);
+    drawLine(topRight, q.topLeft);
     drawLine(topRight, q.botRight);
-    drawLine(q.botRight, botLeft);
+    drawLine(botLeft, q.botRight);
     drawLine(botLeft, q.topLeft);
 
     if (q.botRightTree != NULL) {
@@ -212,15 +212,6 @@ void Ui() {
         reset();
     }
 
-
-    
-    
-    
-
-    //Particles
-
-
-
     ImGui::End();
 
 }
@@ -230,7 +221,9 @@ int __stdcall WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, char* szCmdLine, int
     onDraw = Draw;
     onInput = Input;
     onDrawUI = Ui;
-    init(1500, 1000);
+    GLContext::fpsCounter = true;
+
+    init(1000, 1100);
     return 0;
 }
 
